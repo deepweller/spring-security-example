@@ -1,0 +1,19 @@
+### ref https://jojoldu.tistory.com/266
+
+### create member
+POST http://localhost:8080/v1/member
+Content-Type: application/json
+
+{
+  "memberId": "id",
+  "memberName": "test",
+  "memberPassword": "test123"
+}
+
+### get member
+GET http://localhost:8080/v1/member/1
+
+### get all member
+GET http://localhost:8080/v1/member
+
+###
