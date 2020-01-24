@@ -41,8 +41,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/admin/**").hasRole("ADMIN")
 //                .anyRequest().authenticated()
 
+                //    ExpressionUrlAuthorizationConfigurer.hasRole 에서 ROLE_ prefix 붙여줌
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .antMatchers("/info").hasRole("USER")
+                .antMatchers("/info").hasRole("MEMBER")
                 .antMatchers("/**").permitAll()
                 .and()
 

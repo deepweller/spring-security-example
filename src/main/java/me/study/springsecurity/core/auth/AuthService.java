@@ -33,7 +33,7 @@ public class AuthService implements UserDetailsService {
         if ("admin".equals(memberId)) {
             authorities.add(new SimpleGrantedAuthority(AuthRole.ADMIN.getValue()));
         } else {
-            authorities.add(new SimpleGrantedAuthority(AuthRole.USER.getValue()));
+            authorities.add(new SimpleGrantedAuthority(AuthRole.MEMBER.getValue()));
         }
 
         return new User(member.getMemberId(), member.getMemberPassword(), authorities);
