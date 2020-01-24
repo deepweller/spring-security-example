@@ -13,13 +13,13 @@ public class UserService {
 
     private final UserJpaRepository userJpaRepository;
 
-    public User getUserInfoById(long id) throws Exception {
-        Optional<User> user = userJpaRepository.findById(id);
+    public User getUserInfoBySeq(long seq) throws Exception {
+        Optional<User> user = userJpaRepository.findById(seq);
         return user.orElseThrow(() -> new Exception("no data"));
     }
 
-    public void setUser(String userName) {
-        userJpaRepository.save(new User(userName));
+    public void setUser(User user) {
+        userJpaRepository.save(new User(user));
     }
 
 }

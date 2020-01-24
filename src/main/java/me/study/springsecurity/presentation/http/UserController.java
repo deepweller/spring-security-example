@@ -8,14 +8,14 @@ import org.springframework.web.bind.annotation.*;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("user")
+@RequestMapping("/v1/user")
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("{id}")
-    public User getUserInfoById(@PathVariable("id") long id) {
+    @GetMapping("{seq}")
+    public User getUserInfoById(@PathVariable("seq") long seq) {
         try {
-            return userService.getUserInfoById(id);
+            return userService.getUserInfoBySeq(seq);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -24,7 +24,7 @@ public class UserController {
     }
 
     @PostMapping
-    public void setUser(@RequestBody String name) {
-        userService.setUser(name);
+    public void setUser(@RequestBody User user) {
+        userService.setUser(user);
     }
 }

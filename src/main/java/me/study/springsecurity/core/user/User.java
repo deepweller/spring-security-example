@@ -17,18 +17,26 @@ import java.time.ZoneId;
 public class User {
     @Id
     @GeneratedValue
-    @Column(name = "USER_ID")
-    private Long userId;
+    @Column(name = "USER_SEQ")
+    private Long userSeq;
+
+    @Column(name = "USER_ID", length = 20, nullable = false)
+    private String userId;
 
     @Column(name = "USER_NAME", length = 20, nullable = false)
     private String userName;
+
+    @Column(name = "USER_PASSWORD", length = 20, nullable = false)
+    private String userPassword;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "CREATE_DT", nullable = false)
     private LocalDateTime createDt;
 
-    public User(String userName) {
-        this.userName = userName;
-        this.createDt = LocalDateTime.now(ZoneId.of("Asia/Seoul"));
+    public User(User user) {
+        this.userId = user.userId;
+        this.userPassword = user.userPassword;
+        this.userName = user.userName;
+        this.createDt = LocalDateTime.now(ZoneId.of("Asia/Seoul")).withNano(0);
     }
 }
