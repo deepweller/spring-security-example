@@ -11,6 +11,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
 @Configuration
@@ -34,17 +35,31 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/v1/**").permitAll()
-                .antMatchers("/home").hasRole("USER")
+
+//                .antMatchers("/v1/**", "/").permitAll()
+//                .antMatchers("/home").hasRole("USER")
+//                .antMatchers("/admin/**").hasRole("ADMIN")
+//                .anyRequest().authenticated()
+
                 .antMatchers("/admin/**").hasRole("ADMIN")
-                .anyRequest().authenticated()
+                .antMatchers("/info").hasRole("USER")
+                .antMatchers("/**").permitAll()
                 .and()
+
                 .formLogin()
                 .loginPage("/login").permitAll()
+                .defaultSuccessUrl("/login/result")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPassword")
                 .and()
-                .logout().permitAll();
+
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/logout/result")
+                .invalidateHttpSession(true)
+                .and()
+
+                .exceptionHandling().accessDeniedPage("/denied");
     }
 
     @Override

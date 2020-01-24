@@ -3,6 +3,7 @@ package me.study.springsecurity.core.member;
 
 import lombok.RequiredArgsConstructor;
 import me.study.springsecurity.infrastructure.member.MemberJpaRepository;
+import me.study.springsecurity.presentation.dto.MemberDto;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ public class MemberService {
                 .orElse(new ArrayList<>());
     }
 
-    public void setMember(Member member) {
-        memberJpaRepository.save(new Member(member));
+    public void setMember(MemberDto memberDto) {
+        memberJpaRepository.save(new Member(memberDto));
     }
 }

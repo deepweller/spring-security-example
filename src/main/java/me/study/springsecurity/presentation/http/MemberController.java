@@ -4,6 +4,7 @@ package me.study.springsecurity.presentation.http;
 import lombok.RequiredArgsConstructor;
 import me.study.springsecurity.core.member.Member;
 import me.study.springsecurity.core.member.MemberService;
+import me.study.springsecurity.presentation.dto.MemberDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,7 +32,7 @@ public class MemberController {
     }
 
     @PostMapping
-    public void setMember(@RequestBody Member member) {
-        memberService.setMember(member);
+    public void setMember(@RequestBody MemberDto memberDto) {
+        memberService.setMember(memberDto);
     }
 }

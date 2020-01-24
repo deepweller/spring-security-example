@@ -2,6 +2,7 @@ package me.study.springsecurity.core.member;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import me.study.springsecurity.presentation.dto.MemberDto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
@@ -26,17 +27,17 @@ public class Member {
     @Column(name = "MEMBER_NAME", length = 20, nullable = false)
     private String memberName;
 
-    @Column(name = "MEMBER_PASSWORD", length = 20, nullable = false)
+    @Column(name = "MEMBER_PASSWORD", length = 100, nullable = false)
     private String memberPassword;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     @Column(name = "CREATE_DT", nullable = false)
     private LocalDateTime createDt;
 
-    public Member(Member member) {
-        this.memberId = member.memberId;
-        this.memberPassword = member.memberPassword;
-        this.memberName = member.memberName;
+    public Member(MemberDto memberDto) {
+        this.memberId = memberDto.getMemberId();
+        this.memberPassword = memberDto.getMemberPassword();
+        this.memberName = memberDto.getMemberName();
         this.createDt = LocalDateTime.now(ZoneId.of("Asia/Seoul")).withNano(0);
     }
 }
