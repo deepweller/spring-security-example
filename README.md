@@ -19,3 +19,7 @@
 ## custom
 
 * custom filter with cookie 
+
+## 참고
+
+* https://stackoverflow.com/questions/33205236/spring-security-added-prefix-role-to-all-roles-name
