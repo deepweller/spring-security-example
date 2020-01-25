@@ -54,6 +54,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .passwordParameter("memberPassword")
                 .and()
 
+                .rememberMe()
+                .key("myUniqueKey")
+                .rememberMeCookieName("websparrow-login-remember-me")
+                .tokenValiditySeconds(10000000)
+                .and()
+
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/logout/result")
