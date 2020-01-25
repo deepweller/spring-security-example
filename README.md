@@ -18,7 +18,8 @@
 
 ## custom
 
-* custom filter with cookie 
+* custom filter with cookie
+* add remember me 
 
 ## 참고
 
