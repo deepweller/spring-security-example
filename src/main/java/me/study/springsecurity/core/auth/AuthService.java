@@ -40,10 +40,9 @@ public class AuthService implements UserDetailsService {
     }
 
     @Transactional
-    public Long joinMember(Member member) {
+    public void joinMember(Member member) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         member.setMemberPassword(passwordEncoder.encode(member.getMemberPassword()));
-
-        return memberJpaRepository.save(member).getMemberSeq();
+        memberJpaRepository.save(member);
     }
 }
