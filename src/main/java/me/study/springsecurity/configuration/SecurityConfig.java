@@ -30,6 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
     }
 
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -55,9 +56,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
 
                 .rememberMe()
-                .key("myUniqueKey")
-                .rememberMeCookieName("websparrow-login-remember-me")
-                .tokenValiditySeconds(10000000)
+                .rememberMeParameter("remember-me")
+                .rememberMeCookieName("remember-me-cookie")
+                .tokenValiditySeconds(24 * 60 * 60)
                 .and()
 
                 .logout()
