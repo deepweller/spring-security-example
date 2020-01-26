@@ -18,6 +18,8 @@
 
 ## custom
 
+* custom login success handler
+  * https://4urdev.tistory.com/54
 * custom filter with cookie
 * add remember me 
   * https://www.websparrow.org/spring/spring-boot-security-remember-me-example

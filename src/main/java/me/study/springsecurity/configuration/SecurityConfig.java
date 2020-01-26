@@ -2,6 +2,8 @@ package me.study.springsecurity.configuration;
 
 import lombok.RequiredArgsConstructor;
 import me.study.springsecurity.core.auth.AuthService;
+import me.study.springsecurity.core.auth.CustomAuthFilter;
+import me.study.springsecurity.core.auth.CustomLoginSuccessHandler;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -11,6 +13,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @RequiredArgsConstructor
@@ -19,6 +23,7 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final AuthService authService;
+    private final CustomAuthFilter customAuthFilter;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -29,7 +34,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers("/css/**", "/js/**", "/img/**", "/lib/**");
     }
-
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -53,6 +57,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .defaultSuccessUrl("/login/result")
                 .usernameParameter("memberId")
                 .passwordParameter("memberPassword")
+                .successHandler(successHandler())
                 .and()
 
                 .rememberMe()
@@ -65,7 +70,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
                 .logoutSuccessUrl("/logout/result")
                 .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID", "success-handler-cookie")
                 .and()
+
+                .addFilterBefore(customAuthFilter, UsernamePasswordAuthenticationFilter.class)
 
                 .exceptionHandling().accessDeniedPage("/denied");
     }
@@ -74,5 +82,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(authService)
                 .passwordEncoder(passwordEncoder());
+    }
+
+    @Bean
+    public AuthenticationSuccessHandler successHandler() {
+        return new CustomLoginSuccessHandler("/");
     }
 }
